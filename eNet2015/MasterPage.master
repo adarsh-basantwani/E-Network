@@ -1,0 +1,74 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+<link href=StyleSheet.css type="text/css" rel=Stylesheet />    
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+        <table width=100% cellspacing=20 >
+            <tr valign=top >
+            <td style="width:200px;box-shadow:0px 0px 20px green" >
+                <asp:Repeater ID="Repeater1" runat="server" DataSourceID="sqlInfo">
+                <ItemTemplate>
+                    <center>
+                    <a href=ChangePhoto.aspx >
+                    <img src='<%#Eval("photourl") %>' width=120px title='Click to Change' />
+                    </a>
+                   <hr />
+                    Name :<%#Eval("name") %><hr /></center>
+                </ItemTemplate>
+                </asp:Repeater>
+                <asp:SqlDataSource ID="sqlInfo" runat="server" 
+                    ConnectionString="<%$ ConnectionStrings:ConnectionString %>" 
+                    SelectCommand="SELECT [Name], [PhotoURL] FROM [UserMaster] WHERE ([EmailID] = @EmailID)">
+                    <SelectParameters>
+                        <asp:SessionParameter Name="EmailID" SessionField="userid" Type="String" />
+                    </SelectParameters>
+                </asp:SqlDataSource>
+                <asp:Menu ID="Menu1" runat="server">
+                    <Items>
+                        <asp:MenuItem Text="Home" Value="Home" ImageUrl="~/images/green.png" 
+                            NavigateUrl="~/Home.aspx"></asp:MenuItem>
+                        <asp:MenuItem Text="Edit Profile" Value="Edit Profile" 
+                            ImageUrl="~/images/green.png" NavigateUrl="~/EditProfile.aspx"></asp:MenuItem>
+                        <asp:MenuItem Text="Search Friends" Value="Search Friends" 
+                            ImageUrl="~/images/green.png" NavigateUrl="~/SearchFriends.aspx"></asp:MenuItem>
+                        <asp:MenuItem Text="My Friends" Value="My Friends" 
+                            ImageUrl="~/images/green.png" NavigateUrl="~/myfriends.aspx"></asp:MenuItem>
+                        <asp:MenuItem Text="Messages" Value="Messages" ImageUrl="~/images/green.png"></asp:MenuItem>
+                        <asp:MenuItem Text="Change Pwd" Value="Change Pwd" 
+                            ImageUrl="~/images/green.png" NavigateUrl="~/ChangePwd.aspx"></asp:MenuItem>
+                        <asp:MenuItem ImageUrl="~/images/green.png" Text="Upload Contents" 
+                            Value="Change Photo" NavigateUrl="~/UploadContents.aspx"></asp:MenuItem>
+                        <asp:MenuItem ImageUrl="~/images/green.png" Text="Search Contents" 
+                            Value="Search Contents" NavigateUrl="~/SearchContents.aspx"></asp:MenuItem>
+                        <asp:MenuItem ImageUrl="~/images/green.png" Text="Logout" Value="Logout" 
+                            NavigateUrl="~/Logout.aspx">
+                        </asp:MenuItem>
+                    </Items>
+                    <StaticHoverStyle BackColor="#000066" ForeColor="White" />
+                    <StaticMenuItemStyle BackColor="#3333FF" BorderColor="White" 
+                        BorderStyle="Solid" BorderWidth="3px" Font-Bold="True" Font-Names="Verdana" 
+                        Font-Size="Small" ForeColor="#CCCCCC" HorizontalPadding="20px" Width="160px" />
+                </asp:Menu>
+                <hr />
+            
+            
+            </td>
+            <td style="box-shadow:0px 0px 20px green;padding:15px 15px 15px 15px" >
+            
+                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                </asp:ContentPlaceHolder>
+            
+            </td>
+            </tr>
+        </table>
+    </div>
+    </form>
+</body>
+</html>
